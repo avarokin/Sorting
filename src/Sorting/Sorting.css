@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css?family=Asap:400,500,700');
+
+body {
+  background-color: #282C34;
+}
+
+.title {
+
+  align-self: center;
+  border: 5px;
+  background-color: #61AFEC;
+  padding: 20px 0;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  font-family: Asap, sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.array-container {
+  position: absolute;
+  left: 30px;
+}
+
+.array-bar {
+  width : 3px;
+  background-color: #ECECEC;
+  display: inline-block;
+  margin: 0 1px;
+}
+
+.speed-style {
+  length: 200px;
+  background-color: white;
+  margin-right: 20px;
+  border-width: 3px;
+  border-color: #61AFEC;
+}
+
+.button-type {
+  padding: 5px;
+  margin: 10px;
+  background-color: #61AFEC;
+  border-radius: 4px;
+  font-family: Asap,sans-serif;
+}
