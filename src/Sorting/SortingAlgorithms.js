@@ -64,9 +64,57 @@ export function doInsertionSort(array) {
 
     while( j >= 0 && array[j] >= key) {
       array[j+1] = array[j];
+      animations.push([false,j+1,j,array[j+1],array[j]]);
+      animations.push([true,j+1,j,array[j+1],array[j]]);
       j--;
     }
     array[j+1] = key;
   }
-  return [array];
+  return [animations,array];
+}
+
+export function doQuickSort(array) {
+
+  const animations = [];
+
+  var low = 0;
+  var high = array.length - 1;
+
+  [animations,array] = quickSort(array,animations, low, high);
+
+  return [animations,array];
+}
+
+function quickSort(array,animations,low,high) {
+
+  if (low < high) {
+    var i = divide(array,animations, low, high);
+
+    quickSort(array,animations, low, i - 1);
+    quickSort(array,animations, i + 1, high);
+  }
+}
+
+function divide(array,animations,low,high) {
+  var pi = low;
+  var lower = low + 1;
+
+  for (var i = lower; i <= high; i++) {
+
+    if (array[i] < array[pi]) {
+      exch(array, i, lower);
+      lower++;
+    }
+  }
+
+  exch(array, --lower, pi);
+  pi = lower;
+
+  return pi;
+}
+
+function exch(array, i, j) {
+  let temp = array[i];
+  array[i] = array[j];
+  array[j] = temp;
 }

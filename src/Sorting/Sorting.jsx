@@ -1,7 +1,7 @@
 
 import React from 'react';
 import './Sorting.css';
-import {doBubbleSort, doSelSort, doInsertionSort} from './SortingAlgorithms.js'
+import {doBubbleSort, doSelSort, doInsertionSort, doQuickSort} from './SortingAlgorithms.js'
 
 export default class Sorting extends React.Component {
 
@@ -130,8 +130,6 @@ export default class Sorting extends React.Component {
           b1style.backgroundColor = 'red';
           b2style.backgroundColor = 'red';
         } else {
-            const b1height = 10;
-            const b2height = 50;
 
             b1style.height = `${h2}px`;
             b2style.height = `${h1}px`;
@@ -156,17 +154,59 @@ export default class Sorting extends React.Component {
     var speed = parseInt(document.getElementById('input-speed').value);
     speed = (1/speed) * 1000;
 
-    const array = doInsertionSort(this.state.array);
+    const [animations,array] = doInsertionSort(this.state.array);
+
+    var previousBarOne = 0;
+    var previousBarTwo = 1;
+    var j = 0;
+
+    for ( let i = 0 ; i < animations.length ; i++ ) {
+
+      const [isSwap, barOne, barTwo, h1, h2] = animations[i];
+
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const b1style = arrayBars[barOne].style;
+      const b2style = arrayBars[barTwo].style;
+      const prevb1style = arrayBars[previousBarOne].style;
+      const prevb2style = arrayBars[previousBarTwo].style;
+
+      setTimeout(() => {
+
+        prevb1style.backgroundColor = '#ECECEC';//back to black
+        prevb2style.backgroundColor = '#ECECEC';
+
+        if (!isSwap ) {
+          //change color only
+          b1style.backgroundColor = 'red';
+          b2style.backgroundColor = 'red';
+        } else {
+            //swap them
+            b1style.height = `${h2}px`;
+            b2style.height = `${h1}px`;
+        }
+
+        if ( i === animations.length-1) {
+          enableButtons();
+          this.setState({array});
+        }
+      }, i*(speed));
+      previousBarOne = barOne;
+      previousBarTwo = barTwo;
+    }
+  }
+
+  quickSort() {
+
+    disableButtons();
+    var speed = parseInt(document.getElementById('input-speed').value);
+    speed = (1/speed) * 1000;
+
+    const [animations,array] = doInsertionSort(this.state.array);
 
     for (var i = 0; i < array.length; i++) {
       console.log(array[i]);
     }
 
-
-
-  }
-
-  quickSort() {
 
   }
 
