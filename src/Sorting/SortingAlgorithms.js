@@ -67,8 +67,6 @@ export function doInsertionSort(array) {
       j--;
     }
     array[j+1] = key;
-
   }
-
   return [array];
 }

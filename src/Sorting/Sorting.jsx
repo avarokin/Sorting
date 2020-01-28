@@ -158,6 +158,9 @@ export default class Sorting extends React.Component {
 
     const array = doInsertionSort(this.state.array);
 
+    for (var i = 0; i < array.length; i++) {
+      console.log(array[i]);
+    }
 
 
 
