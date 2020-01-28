@@ -80,7 +80,7 @@ export function doQuickSort(array) {
   var low = 0;
   var high = array.length - 1;
 
-  [animations,array] = quickSort(array,animations, low, high);
+  quickSort(array,animations, low, high);
 
   return [animations,array];
 }
@@ -88,26 +88,31 @@ export function doQuickSort(array) {
 function quickSort(array,animations,low,high) {
 
   if (low < high) {
-    var i = divide(array,animations, low, high);
+    var i = 0;
+    i = divide(array,animations, low, high);
 
     quickSort(array,animations, low, i - 1);
     quickSort(array,animations, i + 1, high);
   }
+
 }
 
 function divide(array,animations,low,high) {
   var pi = low;
   var lower = low + 1;
+  animations.push([true,pi,0,0,0,0]);
 
   for (var i = lower; i <= high; i++) {
 
     if (array[i] < array[pi]) {
+      animations.push([false,pi,lower,i,array[lower],array[i]]);
       exch(array, i, lower);
       lower++;
     }
   }
-
-  exch(array, --lower, pi);
+  --lower;
+  animations.push([false,pi,lower,pi,array[lower],array[pi]]);
+  exch(array, lower, pi);
   pi = lower;
 
   return pi;

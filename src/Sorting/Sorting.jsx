@@ -201,11 +201,61 @@ export default class Sorting extends React.Component {
     var speed = parseInt(document.getElementById('input-speed').value);
     speed = (1/speed) * 1000;
 
-    const [animations,array] = doInsertionSort(this.state.array);
+    const [animations,array] = doQuickSort(this.state.array);
 
-    for (var i = 0; i < array.length; i++) {
-      console.log(array[i]);
+//
+    var previousBarOne = 0;
+    var previousBarTwo = 1;
+    var prevPivot = 0
+    var j = 0;
+
+    for ( let i = 0 ; i < animations.length ; i++ ) {
+
+      const [isPivotCol, pivot, barOne, barTwo, h1, h2] = animations[i];
+
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const pivotStyle = arrayBars[pivot].style;
+      const b1style = arrayBars[barOne].style;
+      const b2style = arrayBars[barTwo].style;
+      const prevPivotStyle = arrayBars[prevPivot].style;
+      const prevb1style = arrayBars[previousBarOne].style;
+      const prevb2style = arrayBars[previousBarTwo].style;
+
+      setTimeout(() => {
+
+        prevb1style.backgroundColor = '#ECECEC';//back to white
+        prevb2style.backgroundColor = '#ECECEC';
+
+        if (isPivotCol) {
+          prevPivotStyle.backgroundColor = '#ECECEC';
+          pivotStyle.backgroundColor = 'green';
+        } else {
+          pivotStyle.backgroundColor = 'green';
+          //swap them
+          b1style.height = `${h2}px`;
+          b2style.height = `${h1}px`;
+          //change color
+          b1style.backgroundColor = 'red';
+          b2style.backgroundColor = 'red';
+        }
+
+        if ( i === animations.length-1) {
+          pivotStyle.backgroundColor = '#ECECEC';
+          enableButtons();
+          this.setState({array});
+        }
+      }, i*(speed));
+      previousBarOne = barOne;
+      previousBarTwo = barTwo;
+      prevPivot = pivot;
+
     }
+//
+
+
+
+
+
 
 
   }
