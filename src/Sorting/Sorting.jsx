@@ -1,7 +1,7 @@
 
 import React from 'react';
 import './Sorting.css';
-import {doBubbleSort, doSelSort, doInsertionSort, doQuickSort} from './SortingAlgorithms.js'
+import {doBubbleSort, doSelSort, doInsertionSort, doQuickSort, doMergeSort} from './SortingAlgorithms.js'
 
 export default class Sorting extends React.Component {
 
@@ -203,7 +203,6 @@ export default class Sorting extends React.Component {
 
     const [animations,array] = doQuickSort(this.state.array);
 
-//
     var previousBarOne = 0;
     var previousBarTwo = 1;
     var prevPivot = 0
@@ -250,24 +249,61 @@ export default class Sorting extends React.Component {
       prevPivot = pivot;
 
     }
+  }
+
+
+  mergeSort() {
+
+    disableButtons();
+    var speed = parseInt(document.getElementById('input-speed').value);
+    speed = (1/speed) * 1000;
+
+    const [animations,array] = doMergeSort(this.state.array);
+
+
+//
+    var previousBarOne = 0;
+    var j = 0;
+
+    for ( let i = 0 ; i < animations.length ; i++ ) {
+
+      const [isSwap, barOne, h1] = animations[i];
+
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const b1style = arrayBars[barOne].style;
+      const prevb1style = arrayBars[previousBarOne].style;
+
+      setTimeout(() => {
+
+        prevb1style.backgroundColor = '#ECECEC';//back to black
+
+        if (!isSwap ) {
+          //change color only
+          b1style.backgroundColor = 'red';
+        } else {
+            //swap them
+            b1style.height = `${h1}px`
+        }
+
+        if ( i === animations.length-1) {
+          enableButtons();
+          this.setState({array});
+        }
+      }, i*(speed));
+      previousBarOne = barOne;
+    }
+
 //
 
 
 
 
-
-
-
   }
+
 
   heapSort() {
 
   }
-
-  mergeSort() {
-
-  }
-
 
   render() {
     const {array} = this.state;
@@ -287,14 +323,14 @@ export default class Sorting extends React.Component {
 
           <div className='buttons'>
 
-            <input className='speed-style' id='input-speed' placeholder='Animation Speed(1-1000)' type="text" name="fname"></input>
+            <input className='speed-style' id='input-speed' placeholder='Speed (1-1000)' type="text" name="fname"></input>
             <button id='newArray' className='button-type' onClick={() => window.location.reload()}>Generate New Array</button>
             <button id='bubble' className='button-type' onClick={() => this.bubbleSort()}>BubbleSort</button>
             <button id='selection' className='button-type' onClick={() => this.selectionSort()}>SelectionSort</button>
             <button id='insertion' className='button-type' onClick={() => this.insertionSort()}>InsertionSort</button>
             <button id='quick' className='button-type' onClick={() => this.quickSort()}>QuickSort</button>
-            <button id='heap' className='button-type' onClick={() => this.heapSort()}>HeapSort</button>
             <button id='merge' className='button-type' onClick={() => this.mergeSort()}>MergeSort</button>
+            <button id='heap' className='button-type' onClick={() => this.heapSort()}>HeapSort</button>
 
           </div>
       </div>

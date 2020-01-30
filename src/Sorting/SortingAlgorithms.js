@@ -123,3 +123,41 @@ function exch(array, i, j) {
   array[i] = array[j];
   array[j] = temp;
 }
+
+export function doMergeSort(array) {
+  const animations = [];
+  divide2(array, animations, 0, (array.length - 1));
+  return [animations,array];
+}
+
+function divide2(array,animations,left,right) {
+
+  if (left < right) {
+            var mid = Math.floor((left + right) / 2);
+            divide2(array, animations, left, mid);
+            divide2(array, animations, mid + 1, right);
+
+            merge(array, animations, left, mid, right);
+        }
+}
+
+function merge(array, animations, left, mid, right) {
+
+  let aux = array.slice();
+
+  var i = left;
+  var j = mid+1;
+  for (let k = left; k <= right; k++) {
+    if (i > mid) {
+      array[k] = aux[j++];
+    } else if (j > right) {
+      array[k] = aux[i++];
+    } else if (aux[j] <= aux[i]) {
+      array[k] = aux[j++];
+    } else {
+      array[k] = aux[i++];
+    }
+    animations.push([false, k, array[k]]);
+    animations.push([true, k, array[k]]);
+  }
+}
