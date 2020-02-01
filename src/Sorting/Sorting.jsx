@@ -1,7 +1,7 @@
 
 import React from 'react';
 import './Sorting.css';
-import {doBubbleSort, doSelSort, doInsertionSort, doQuickSort, doMergeSort} from './SortingAlgorithms.js'
+import {doBubbleSort, doSelSort, doInsertionSort, doQuickSort, doMergeSort, doHeapSort } from './SortingAlgorithms.js'
 
 export default class Sorting extends React.Component {
 
@@ -251,7 +251,6 @@ export default class Sorting extends React.Component {
     }
   }
 
-
   mergeSort() {
 
     disableButtons();
@@ -260,8 +259,6 @@ export default class Sorting extends React.Component {
 
     const [animations,array] = doMergeSort(this.state.array);
 
-
-//
     var previousBarOne = 0;
     var j = 0;
 
@@ -292,16 +289,53 @@ export default class Sorting extends React.Component {
       }, i*(speed));
       previousBarOne = barOne;
     }
-
-//
-
-
-
-
   }
 
-
   heapSort() {
+
+    disableButtons();
+    var speed = parseInt(document.getElementById('input-speed').value);
+    speed = (1/speed) * 1000;
+
+    const [animations,array] = doHeapSort(this.state.array);
+
+    var previousBarOne = 0;
+    var previousBarTwo = 1;
+    var j = 0;
+
+    for ( let i = 0 ; i < animations.length ; i++ ) {
+
+      const [isSwap, barOne, barTwo, h1, h2] = animations[i];
+
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const b1style = arrayBars[barOne].style;
+      const b2style = arrayBars[barTwo].style;
+      const prevb1style = arrayBars[previousBarOne].style;
+      const prevb2style = arrayBars[previousBarTwo].style;
+
+      setTimeout(() => {
+
+        prevb1style.backgroundColor = '#ECECEC';//back to black
+        prevb2style.backgroundColor = '#ECECEC';
+
+        if (!isSwap ) {
+          //change color only
+          b1style.backgroundColor = 'red';
+          b2style.backgroundColor = 'red';
+        } else {
+            //swap them
+            b1style.height = `${h2}px`;
+            b2style.height = `${h1}px`;
+        }
+
+        if ( i === animations.length-1) {
+          enableButtons();
+          this.setState({array});
+        }
+      }, i*(speed));
+      previousBarOne = barOne;
+      previousBarTwo = barTwo;
+    }
 
   }
 
@@ -313,6 +347,8 @@ export default class Sorting extends React.Component {
       <div className='array-container'>
 
         <div className='title'>Sorting Visualized</div>
+
+        <div className='name'>by Saini</div>
 
         {array.map((value,index) => (
             <div

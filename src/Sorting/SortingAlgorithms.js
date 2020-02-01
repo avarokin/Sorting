@@ -161,3 +161,53 @@ function merge(array, animations, left, mid, right) {
     animations.push([true, k, array[k]]);
   }
 }
+
+export function doHeapSort(array) {
+
+  const animations = [];
+
+  let n = array.length;
+          for (let k = Math.floor(n / 2); k >= 1; k--)
+              sink(array,animations, k, n);
+          while (n > 1) {
+              exch2(array, 1, n--);
+              sink(array,animations, 1, n);
+              animations.push([false,1,n,array[1],array[n]]);
+              animations.push([true,1,n,array[1],array[n]]);
+
+          }
+  return [animations,array];
+}
+
+function sink(array, animations, k, n) {
+  while (2 * k <= n) {
+
+            let j = 2 * k;
+
+            if (j < n && less(array, j, j + 1)){
+              j++;
+            }
+
+            if (!less(array, k, j)){
+               break;
+            }
+
+            if ( array[j] != undefined ) {
+              animations.push([false,k,j,array[k],array[j]]);
+              animations.push([true,k,j,array[k],array[j]]);
+            }
+
+            exch2(array, k, j);
+            k = j;
+        }
+}
+
+function exch2(array, i , j) {
+  let swap = array[i - 1];
+  array[i - 1] = array[j - 1];
+  array[j - 1] = swap;
+}
+
+function less(array,i,j) {
+  return array[i-1]<array[j-1];
+}
