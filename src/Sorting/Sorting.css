@@ -41,7 +41,7 @@ body {
 }
 
 .array-bar {
-  width : 3px%;
+  width : 3px;
   background-color: #ECECEC;
   display: inline-block;
   margin: 0 1px;
