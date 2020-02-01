@@ -199,7 +199,7 @@ export default class Sorting extends React.Component {
 
     disableButtons();
     var speed = parseInt(document.getElementById('input-speed').value);
-    speed = (1/speed) * 1000;
+    speed = (1/speed) * 10000;
 
     const [animations,array] = doQuickSort(this.state.array);
 
@@ -255,7 +255,7 @@ export default class Sorting extends React.Component {
 
     disableButtons();
     var speed = parseInt(document.getElementById('input-speed').value);
-    speed = (1/speed) * 1000;
+    speed = (1/speed) * 10000;
 
     const [animations,array] = doMergeSort(this.state.array);
 
@@ -295,7 +295,7 @@ export default class Sorting extends React.Component {
 
     disableButtons();
     var speed = parseInt(document.getElementById('input-speed').value);
-    speed = (1/speed) * 1000;
+    speed = (1/speed) * 10000;
 
     const [animations,array] = doHeapSort(this.state.array);
 
@@ -359,7 +359,7 @@ export default class Sorting extends React.Component {
 
           <div className='buttons'>
 
-            <input className='speed-style' id='input-speed' placeholder='Speed (1-1000)' type="text" name="fname"></input>
+            <p className='speed-text'>Speed -> </p><input  id='input-speed' type="range" min="1" max="10000"></input>
             <button id='newArray' className='button-type' onClick={() => window.location.reload()}>Generate New Array</button>
             <button id='bubble' className='button-type' onClick={() => this.bubbleSort()}>BubbleSort</button>
             <button id='selection' className='button-type' onClick={() => this.selectionSort()}>SelectionSort</button>
@@ -367,6 +367,7 @@ export default class Sorting extends React.Component {
             <button id='quick' className='button-type' onClick={() => this.quickSort()}>QuickSort</button>
             <button id='merge' className='button-type' onClick={() => this.mergeSort()}>MergeSort</button>
             <button id='heap' className='button-type' onClick={() => this.heapSort()}>HeapSort</button>
+
 
           </div>
       </div>
