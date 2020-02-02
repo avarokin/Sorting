@@ -35,6 +35,17 @@ body {
   display: inline;
 }
 
+.text-style {
+  color: white;
+  font-family: Asap,sans-serif;
+  display: inline;
+}
+
+.tab {
+  display: inline;
+  padding: 20px;
+}
+
 .array-container {
   position: relative;
   align-items: center;

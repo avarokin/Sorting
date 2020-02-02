@@ -3,6 +3,9 @@ import React from 'react';
 import './Sorting.css';
 import {doBubbleSort, doSelSort, doInsertionSort, doQuickSort, doMergeSort, doHeapSort } from './SortingAlgorithms.js'
 
+const NBARS = Math.floor(window.innerWidth/5)-10;
+const MAX_INTERVAL = Math.floor(window.innerHeight/1.25)-10;
+
 export default class Sorting extends React.Component {
 
   // Constructor for Sorting class
@@ -22,19 +25,22 @@ export default class Sorting extends React.Component {
   resetArray () {
 
     const array = [];
-    for (let i = 0 ; i < 240  ; i++  ) {
+    for (let i = 0 ; i < NBARS  ; i++  ) {
       array.push(0);
     }
     this.setState({array});
-
     this.initiate();
+    document.getElementById('comps-id').innerHTML = 0;
+    document.getElementById('swaps-id').innerHTML = 0;
   }
 
   initiate() {
 
+    console.log(window.innerHeight);
+
     const array = [];
-    for (let i = 0 ; i < 240  ; i++  ) {
-      array.push(randomIntFromInterval(5,600));
+    for (let i = 0 ; i < NBARS  ; i++  ) {
+      array.push(randomIntFromInterval(5,MAX_INTERVAL));
     }
 
     const arrayBars = document.getElementsByClassName('array-bar');
@@ -50,10 +56,8 @@ export default class Sorting extends React.Component {
               enableButtons();
               this.setState({array});
             }
-
           }, i*(5));
       }
-
   }
 
   bubbleSort() {
@@ -63,8 +67,10 @@ export default class Sorting extends React.Component {
     var speed = parseInt(document.getElementById('input-speed').value);
     speed = (1/speed) * 1000;
 
-    const [animations,swap,array] = doBubbleSort(this.state.array);
+    const [animations,swap,array,comps,swaps] = doBubbleSort(this.state.array);
     var j = 0;
+    var swaps_t = 0;
+    var comps_t = 0;
 
     for (let i = 0; i < animations.length; i++) {
 
@@ -79,8 +85,16 @@ export default class Sorting extends React.Component {
 
       setTimeout(() => {
 
-        if (isSwap ) {
+        if (swaps_t <= swaps) {
+          document.getElementById('swaps-id').innerHTML = swaps_t
+          swaps_t++;
+        }
+        if (comps_t <= comps) {
+          document.getElementById('comps-id').innerHTML = comps_t
+          comps_t++;
+        }
 
+        if (isSwap ) {
           const [b1height, b2height] = swap[j++];
 
           b1style.height = `${b1height}px`;
@@ -104,11 +118,13 @@ export default class Sorting extends React.Component {
     var speed = parseInt(document.getElementById('input-speed').value);
     speed = (1/speed) * 1000;
 
-    const [animations,array] = doSelSort(this.state.array);
+    const [animations,array,comps,swaps] = doSelSort(this.state.array);
 
     var previousBarOne = 0;
     var previousBarTwo = 1;
     var j = 0;
+    var swaps_t = 0;
+    var comps_t = 0;
 
     for ( let i = 0 ; i < animations.length ; i++ ) {
 
@@ -122,6 +138,15 @@ export default class Sorting extends React.Component {
       const prevb2style = arrayBars[previousBarTwo].style;
 
       setTimeout(() => {
+
+        if (swaps_t <= swaps) {
+          document.getElementById('swaps-id').innerHTML = swaps_t
+          swaps_t++;
+        }
+        if (comps_t <= comps) {
+          document.getElementById('comps-id').innerHTML = comps_t
+          comps_t++;
+        }
 
         prevb1style.backgroundColor = '#ECECEC';
         prevb2style.backgroundColor = '#ECECEC';
@@ -154,11 +179,13 @@ export default class Sorting extends React.Component {
     var speed = parseInt(document.getElementById('input-speed').value);
     speed = (1/speed) * 1000;
 
-    const [animations,array] = doInsertionSort(this.state.array);
+    const [animations,array,comps,swaps] = doInsertionSort(this.state.array);
 
     var previousBarOne = 0;
     var previousBarTwo = 1;
     var j = 0;
+    var comps_t = 0;
+    var swaps_t = 0;
 
     for ( let i = 0 ; i < animations.length ; i++ ) {
 
@@ -171,6 +198,15 @@ export default class Sorting extends React.Component {
       const prevb2style = arrayBars[previousBarTwo].style;
 
       setTimeout(() => {
+
+        if (swaps_t <= swaps) {
+          document.getElementById('swaps-id').innerHTML = swaps_t
+          swaps_t++;
+        }
+        if (comps_t <= comps) {
+          document.getElementById('comps-id').innerHTML = comps_t
+          comps_t++;
+        }
 
         prevb1style.backgroundColor = '#ECECEC';//back to black
         prevb2style.backgroundColor = '#ECECEC';
@@ -201,12 +237,14 @@ export default class Sorting extends React.Component {
     var speed = parseInt(document.getElementById('input-speed').value);
     speed = (1/speed) * 10000;
 
-    const [animations,array] = doQuickSort(this.state.array);
+    const [animations,array,comps,swaps] = doQuickSort(this.state.array);
 
     var previousBarOne = 0;
     var previousBarTwo = 1;
     var prevPivot = 0
     var j = 0;
+    var swaps_t = 0;
+    var comps_t = 0;
 
     for ( let i = 0 ; i < animations.length ; i++ ) {
 
@@ -221,6 +259,15 @@ export default class Sorting extends React.Component {
       const prevb2style = arrayBars[previousBarTwo].style;
 
       setTimeout(() => {
+
+        if (swaps_t <= swaps) {
+          document.getElementById('swaps-id').innerHTML = swaps_t
+          swaps_t++;
+        }
+        if (comps_t <= comps) {
+          document.getElementById('comps-id').innerHTML = comps_t
+          comps_t++;
+        }
 
         prevb1style.backgroundColor = '#ECECEC';//back to white
         prevb2style.backgroundColor = '#ECECEC';
@@ -257,10 +304,12 @@ export default class Sorting extends React.Component {
     var speed = parseInt(document.getElementById('input-speed').value);
     speed = (1/speed) * 10000;
 
-    const [animations,array] = doMergeSort(this.state.array);
+    const [animations,array,comps,swaps] = doMergeSort(this.state.array);
 
     var previousBarOne = 0;
     var j = 0;
+    var comps_t = 0;
+    var swaps_t = 0;
 
     for ( let i = 0 ; i < animations.length ; i++ ) {
 
@@ -271,6 +320,15 @@ export default class Sorting extends React.Component {
       const prevb1style = arrayBars[previousBarOne].style;
 
       setTimeout(() => {
+
+        if (swaps_t <= swaps) {
+          document.getElementById('swaps-id').innerHTML = swaps_t
+          swaps_t++;
+        }
+        if (comps_t <= comps) {
+          document.getElementById('comps-id').innerHTML = comps_t
+          comps_t++;
+        }
 
         prevb1style.backgroundColor = '#ECECEC';//back to black
 
@@ -297,11 +355,13 @@ export default class Sorting extends React.Component {
     var speed = parseInt(document.getElementById('input-speed').value);
     speed = (1/speed) * 10000;
 
-    const [animations,array] = doHeapSort(this.state.array);
+    const [animations,array, comps, swaps] = doHeapSort(this.state.array);
 
     var previousBarOne = 0;
     var previousBarTwo = 1;
     var j = 0;
+    var comps_t = 0;
+    var swaps_t = 0;
 
     for ( let i = 0 ; i < animations.length ; i++ ) {
 
@@ -314,6 +374,15 @@ export default class Sorting extends React.Component {
       const prevb2style = arrayBars[previousBarTwo].style;
 
       setTimeout(() => {
+
+        if (swaps_t <= swaps) {
+          document.getElementById('swaps-id').innerHTML = swaps_t
+          swaps_t++;
+        }
+        if (comps_t <= comps) {
+          document.getElementById('comps-id').innerHTML = comps_t
+          comps_t++;
+        }
 
         prevb1style.backgroundColor = '#ECECEC';//back to black
         prevb2style.backgroundColor = '#ECECEC';
@@ -347,8 +416,15 @@ export default class Sorting extends React.Component {
       <div className='array-container'>
 
         <div className='title'>Sorting Visualized</div>
-
         <div className='name'>by Saini</div>
+
+        <div className='text-style'>#compares = </div>
+        <output className='text-style' id='comps-id'></output>
+        <p className='tab'></p>
+        <div className='text-style'>#swaps = </div>
+        <output className='text-style' id='swaps-id'></output>
+
+        <p></p>
 
         {array.map((value,index) => (
             <div
