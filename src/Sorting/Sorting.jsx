@@ -414,7 +414,6 @@ export default class Sorting extends React.Component {
     // hold values in array-bar objects
     return (
       <div className='array-container'>
-
         <div className='title'>Sorting Visualized</div>
         <div className='name'>by Saini</div>
 
