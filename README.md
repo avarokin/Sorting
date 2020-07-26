@@ -1,3 +1,9 @@
+I worked on this project as my first hands-on to any web developent. I had learnt about various sorting algorithms, among other things, in my Data Structures and Algorithms class. I decided to implement a visualizer tool for some common sorting algorithms, while also learning web application programming. I allow the user to visualise, with distinct cues and speed control, how an algorithm executes sorting, while also having a handy count of number of compares and swaps made by each algorithm as an objective comparison of performance.
+
+I used ReactJS, NPM and Bootstrap to help me develop this applicaiton, written mostly in JavaScript with CSS for styling. I also learn about some eccentricities of JavaScript while debugging. Visit Application at https://saini1.netlify.app/
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
